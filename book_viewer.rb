@@ -26,6 +26,9 @@ get "/chapters/:number" do
 
   number = params[:number].to_i
   chapter_name = @contents[number - 1]
+
+  redirect "/" unless (1..@contents.size).cover? number
+
   @title = "Chapter #{number}: #{chapter_name}"
 
   @chapter = File.read("data/chp#{number}.txt")
@@ -53,4 +56,8 @@ helpers do
     end.join
   end
 
+end
+
+not_found do
+  redirect "/"
 end
